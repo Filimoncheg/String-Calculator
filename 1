@@ -4,14 +4,20 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
+
+        calc(input);
         
-    
+        
+    }
+
+    public static String calc(String input) throws Exception{
+
         char operator;
-        
+
+        String result = "";
+
         String[] parts;
-        
-        
-        
+
         if (input.contains(" + ")) {
             parts = input.split(" \\+ ");
             operator = '+';
@@ -27,63 +33,63 @@ public class Main {
         }else{
             throw new Exception();
         } 
-        
-        
+
+
         if (operator == '*' || operator == '/') {
         int num = Integer.valueOf(parts[1]);
         if(num < 1 || num > 10){
             throw new Exception();
         }
         }
-        
-        
+
+
         int x = parts[0].length();
         int y = parts[1].length();
-        
-        if (x > 10 || y > 10) {
+
+        if (x > 12 || y > 12) {
         throw new Exception();
         }
-        
-        
+
+
         if (!parts[0].startsWith("\"") || !parts[0].endsWith("\"")) {
           throw new Exception();
         }
-        
-        
+
+
         if (operator == '+' || operator == '-') {
             if (!parts[1].startsWith("\"") || !parts[1].endsWith("\"")) 
             throw new Exception();
         }
-        
-        
+
+
         if (operator == '*' || operator == '/') {
             if (parts[1].contains("\""))
             throw new Exception();
         }
-        
-        
-        
+
+
+
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].replace("\"", "");
         }
-        
-        
+
+
         StringBuilder sb = new StringBuilder();
-        
-        
+
+
         if (operator == '+') {
-            System.out.print("\"" + parts[0] + parts[1] + "\"");
+            result =  parts[0] + parts[1];
         } else 
-        
+
         if (operator == '-') {
             if (parts[0].contains(parts[1])) {
             parts[0] = parts[0].replace(parts[1], "");
-            System.out.print("\"" + parts[0] + "\"");
+            result =  parts[0];
         } else {
-            System.out.print("\"" + parts[0] + "\"");
+            result = parts[0];
         }
         }else 
-        
+
         if (operator == '*') {
             int num = Integer.valueOf(parts[1]);
             int n=0;
@@ -91,19 +97,24 @@ public class Main {
             sb.append(parts[0]);
             n++;
         }
-        
+
         int w = sb.length();
         if (w > 40) {
-            System.out.print("\"" + sb.substring(0, 40) + "..." + "\"");
+            result = sb.substring(0, 40) + "...";
         }
-        else {System.out.print("\"" + sb.toString() + "\"");}
+        else {result =  sb.toString();}
         } else 
-        
+
         if (operator == '/') {
         int num = Integer.valueOf(parts[1]);
-        System.out.print("\"" + parts[0].substring(0, num) + "\"");
+        int z = parts[0].length() / num;
+        result =  parts[0].substring(0, z);
         }
         else{}
+        
+        System.out.print("\"" + result + "\"");
+        
+        return result;
     }
 
 }
